@@ -1,0 +1,35 @@
+name: wongames-damasio-mcp
+description: A Model Context Protocol (MCP) server.
+version: 1.0.0
+author: Saymon Damasio
+repository: https://github.com/saymondamasio/wongames-mcp
+license: MIT
+
+# Smithery.ai configuration
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    {}
+  commandFunction:
+    # A function that produces the CLI command to start the MCP on stdio.
+    |-
+    (config) => ({
+      "command": "bun",
+      "args": [
+        "src/index.ts"
+      ]
+    })
+  
+tools:
+  - name: get-games
+    description: Retrieves a paginated list of games with optional filtering
+    parameters:
+      - name: id
+        type: number
+        description: Filter games by id
+        optional: true
+      - name: name
+        type: string
+        description: Filter talks by name
+        optional: true
