@@ -1,6 +1,6 @@
 // @ts-nocheck
-import type { GraphqlOperation } from './generateGraphqlOperation'
-import { GenqlError } from './error'
+import type { GraphqlOperation } from './generateGraphqlOperation.ts'
+import { GenqlError } from './error.ts'
 
 type Variables = Record<string, any>
 

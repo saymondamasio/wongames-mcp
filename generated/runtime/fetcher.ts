@@ -1,9 +1,9 @@
 // @ts-nocheck
-import { QueryBatcher } from './batcher'
+import { QueryBatcher } from './batcher.ts'
 
-import type { ClientOptions } from './createClient'
-import type { GraphqlOperation } from './generateGraphqlOperation'
-import { GenqlError } from './error'
+import type { ClientOptions } from './createClient.ts'
+import type { GraphqlOperation } from './generateGraphqlOperation.ts'
+import { GenqlError } from './error.ts'
 
 export interface Fetcher {
     (gql: GraphqlOperation): Promise<any>

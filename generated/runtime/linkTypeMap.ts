@@ -6,7 +6,7 @@ import type {
     LinkedField,
     LinkedType,
     LinkedTypeMap,
-} from './types'
+} from './types.ts'
 
 export interface PartialLinkedFieldMap {
     [field: string]: {

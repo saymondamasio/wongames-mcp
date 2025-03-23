@@ -4,7 +4,7 @@ import type {
   Query,
   MutationGenqlSelection,
   Mutation,
-} from './schema'
+} from './schema.ts'
 import {
   linkTypeMap,
   createClient as createClientOriginal,
@@ -13,12 +13,12 @@ import {
   type GraphqlOperation,
   type ClientOptions,
   GenqlError,
-} from './runtime'
-export type { FieldsSelection } from './runtime'
+} from '../generated/runtime/index.ts'
+export type { FieldsSelection } from '../generated/runtime/index.ts'
 export { GenqlError }
 
-import types from './types'
-export * from './schema'
+import types from './types.ts'
+export * from './schema.ts'
 const typeMap = linkTypeMap(types as any)
 
 export interface Client {

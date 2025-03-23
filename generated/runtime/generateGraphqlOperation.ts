@@ -1,5 +1,5 @@
 // @ts-nocheck
-import type { LinkedField, LinkedType } from './types'
+import type { LinkedField, LinkedType } from './types.ts'
 
 export interface Args {
     [arg: string]: any | undefined
