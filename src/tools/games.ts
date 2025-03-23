@@ -13,9 +13,13 @@ export const getGamesTool = {
   parameters: {
     id: z.number().optional().describe("Filter games by ID"),
     name: z.string().optional().describe("Filter games by name"),
-    page: z.number().optional().describe("Number page"),
     start: z.number().optional().default(0).describe("Number of first entry"),
     limit: z.number().optional().default(10).describe("Maximum number of games to return"),
+    price: z.object({
+      gt: z.number().optional().describe("Filter games by price greater than"),
+      lt: z.number().optional().describe("Filter games by price less than"),
+    }).optional().describe("Filter games by price"),
+    platforms: z.array(z.string()).optional().describe("Filter games by platforms (e.g. 'windows', 'mac', 'linux')"),
   },
   handler: async (params: GamesParams): Promise<McpResponse> => {
     try {
@@ -35,7 +39,7 @@ export const getGamesTool = {
       };
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-      throw new Error(`Failed to fetch posts: ${errorMessage}`);
+      throw new Error(`Failed to fetch games: ${errorMessage}`);
     }
   }
 }; 

@@ -4,6 +4,11 @@ export interface GamesParams {
   page?: number;
   start?: number;
   limit?: number;
+  platforms?: string[];
+  price?: {
+    gt?: number;
+    lt?: number;
+  };
 }
 
 

@@ -5,7 +5,9 @@ import type { GamesParams } from '../types/index.ts';
  * Fetches posts with optional filtering and pagination
  */
 export async function fetchGames(params: GamesParams){
-  const { id, name, page, limit, start } = params;
+  const { id, name, page, limit, start, price, platforms } = params;
+
+  console.error('Params ', params)
 
   return await client.query({
     games_connection: {
@@ -17,17 +19,25 @@ export async function fetchGames(params: GamesParams){
         },
         filters: {
           name: {
-            contains: name
+            contains: name,
           },
+          platforms: {
+            and: platforms?.map(platform => ({
+              name: {
+                contains: platform
+              }
+            }))
+          },
+          price
         }
       },
       nodes: {
         name: true,
         documentId: true,
         price: true,
-        description: true,
+        slug: true,
         locale: true,
-        releaseDate: true,
+        release_date: true,
         rating: true,
       },
       pageInfo: {
@@ -35,6 +45,14 @@ export async function fetchGames(params: GamesParams){
         total: true,
         page: true,
       }
+    }
+  });
+}
+
+export async function fetchPlatforms(){
+  return await client.query({
+    platforms: {
+      name: true,
     }
   });
 }
