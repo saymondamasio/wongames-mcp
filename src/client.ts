@@ -5,6 +5,12 @@ import { createInterface, Interface } from 'readline';
 // import { ChatCompletionMessageToolCall } from 'openai/resources.mjs';
 process.loadEnvFile('./.env')
 
+// Nova flag e função auxiliar para logging verbose
+const isVerbose = process.argv.includes("--verbose") || process.argv.includes("-v");
+function vlog(...args: any[]) {
+  if (isVerbose) console.log(...args);
+}
+
 // Define custom types to help with type checking
 interface ToolCall {
   id: string;
@@ -17,7 +23,7 @@ class LLMClient {
   private openai: OpenAI;
   
   constructor() {
-    console.log(process.env.OPENAI_API_KEY)
+    vlog(process.env.OPENAI_API_KEY)
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY
     });
@@ -27,7 +33,7 @@ class LLMClient {
     console.log('Sending to OpenAI...');
     
     try {
-      console.log(JSON.stringify({
+      vlog(JSON.stringify({
         model: "gpt-4o-mini",
         messages: messages.map(message => {
           if(message.tool_calls) {
@@ -80,7 +86,7 @@ class LLMClient {
         })),
       });
 
-      console.log('Resposta: ', JSON.stringify(response, null, 2))
+      vlog('Resposta: ', JSON.stringify(response, null, 2))
       
       return response.choices[0].message;
     } catch (error) {
@@ -127,7 +133,7 @@ class MCPLLMApplication {
     console.log('Discovering tools...');
     const toolsResult = await this.mcpClient.listTools();
 
-    console.log(toolsResult.tools)
+    vlog('Tools:', toolsResult.tools);
     
     // Format tools for LLM
     this.toolDefinitions = toolsResult.tools.map(tool => ({
@@ -195,7 +201,7 @@ class MCPLLMApplication {
                 resultContent[0].text
             });
             
-            console.log('Tool result:', resultContent[0].text);
+            vlog('Tool result:', resultContent[0].text);
 
             const llmResponseWithTools = await this.llmClient.sendMessage(this.messages, {
               tools: this.toolDefinitions
