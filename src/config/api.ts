@@ -1,4 +1,4 @@
-import { createClient } from "../../generated";
+import { createClient } from "../../generated/index.ts";
 
 
 // GraphQL API endpoint
@@ -15,6 +15,10 @@ export const TOOL_CONFIG = {
     name: "get_games",
     description: "Get a list of games with optional filtering and pagination."
   },
+  platforms: {
+    name: "get_platforms",
+    description: "Get a list of platforms. Check if the platform the user requested exists"
+  }
 };
 
 // Server configuration
