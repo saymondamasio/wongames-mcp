@@ -19,7 +19,10 @@ export const getGamesTool = {
       gt: z.number().optional().describe("Filter games by price greater than"),
       lt: z.number().optional().describe("Filter games by price less than"),
     }).optional().describe("Filter games by price"),
-    platforms: z.array(z.string()).optional().describe("Filter games by platforms (e.g. 'windows', 'mac', 'linux')"),
+    developers: z.array(z.string()).optional().describe("Filter games by developers. Check if developer exists"),
+    categories: z.array(z.string()).optional().describe("Filter games by categories. Check if category exists"),
+    publishers: z.array(z.string()).optional().describe("Filter games by publishers. Check if publisher exists"),
+    platforms: z.array(z.string()).optional().describe("Filter games by platforms. Check if platform exists"),
   },
   handler: async (params: GamesParams): Promise<McpResponse> => {
     try {
