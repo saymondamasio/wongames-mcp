@@ -5,14 +5,15 @@ export interface GamesParams {
   start?: number;
   limit?: number;
   platforms?: string[];
+  publishedAt?: string;
+  developers?: string[];
+  categories?: string[];
+  publishers?: string[];
   price?: {
     gt?: number;
     lt?: number;
   };
 }
-
-
-
 
 
 // MCP response types
