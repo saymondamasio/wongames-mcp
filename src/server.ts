@@ -7,69 +7,68 @@ import { getCategoriesTool } from "./tools/categories.ts";
 import { getPublishersTool } from "./tools/publishers.ts";
 import { getDevelopersTool } from "./tools/developers.ts";
 
-/**
- * Initialize the MCP server and register all tools
- */
-async function initializeServer() {
-  // Create server instance
-  const server = new McpServer({
-    name: SERVER_CONFIG.name,
-    version: SERVER_CONFIG.version,
-    description: SERVER_CONFIG.description,
-  });
+import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
+import express from 'express';
 
-  // Register all tools
-  server.tool(
-    getGamesTool.name,
-    getGamesTool.description,
-    getGamesTool.parameters,
-    getGamesTool.handler
-  );
 
-  server.tool(
-    getPlatformsTool.name,
-    getPlatformsTool.description,
-    getPlatformsTool.handler
-  );
+process.loadEnvFile('./.env')
 
-  server.tool(
-    getCategoriesTool.name,
-    getCategoriesTool.description,
-    getCategoriesTool.handler
-  );
+const app = express()
 
-  server.tool(
-    getPublishersTool.name,
-    getPublishersTool.description,
-    getPublishersTool.handler
-  );
+const server = new McpServer({
+  name: SERVER_CONFIG.name,
+  version: SERVER_CONFIG.version,
+  description: SERVER_CONFIG.description,
+});
 
-  
-  server.tool(
-    getDevelopersTool.name,
-    getDevelopersTool.description,
-    getDevelopersTool.handler
-  );
 
-  return server;
-}
+server.tool(
+  getPlatformsTool.name,
+  getPlatformsTool.description,
+  getPlatformsTool.handler
+);
 
-/**
- * Main entry point
- */
-async function main() {
-  // Initialize the server
-  const server = await initializeServer();
-  
-  // Connect to stdio transport
-  const transport = new StdioServerTransport();
+server.tool(
+  getCategoriesTool.name,
+  getCategoriesTool.description,
+  getCategoriesTool.handler
+);
+
+server.tool(
+  getPublishersTool.name,
+  getPublishersTool.description,
+  getPublishersTool.handler
+);
+
+
+server.tool(
+  getDevelopersTool.name,
+  getDevelopersTool.description,
+  getDevelopersTool.handler
+);
+
+server.tool(
+  getGamesTool.name,
+  getGamesTool.description,
+  getGamesTool.parameters,
+  getGamesTool.handler
+);
+
+let transport: SSEServerTransport | null = null;
+
+app.get('/sse', async (req, res)=> {
+  console.log('sse');
+  transport = new SSEServerTransport('/messages', res);
+
   await server.connect(transport);
-  // console.error for claude-desktop so it won't process this output
-  console.error("API MCP Server running on stdio");
-}
+})
 
-// Start the server
-main().catch((error) => {
-  console.error("Fatal error in main():", error);
-  process.exit(1);
-}); 
+app.post("/messages", async (req, res) => {
+  console.log('messages', req.body);
+  if(transport)
+    await transport.handlePostMessage(req, res);
+});
+
+app.listen(3000, () => {
+  console.log('Server listening on port 3000');
+});

@@ -4,6 +4,13 @@ import { z } from "zod";
 import { Resend } from "resend";
 import minimist from "minimist";
 
+import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
+import express from 'express';
+
+process.loadEnvFile('./.env')
+
+const app = express()
+
 // Parse command line arguments
 const argv = minimist(process.argv.slice(2));
 
@@ -173,13 +180,21 @@ server.tool(
   }
 );
 
-async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error("Email sending service MCP Server running on stdio");
-}
+let transport: SSEServerTransport | null = null;
 
-main().catch((error) => {
-  console.error("Fatal error in main():", error);
-  process.exit(1);
+app.get('/sse', async (req, res)=> {
+  console.log('sse');
+  transport = new SSEServerTransport('/messages', res);
+
+  await server.connect(transport);
+})
+
+app.post("/messages", async (req, res) => {
+  console.log('messages', req.body);
+  if(transport)
+    await transport.handlePostMessage(req, res);
+});
+
+app.listen(3001, () => {
+  console.log('Server listening on port 3001');
 });

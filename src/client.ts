@@ -6,6 +6,7 @@ import { createInterface, Interface } from 'readline';
 
 import { createTransport } from "@smithery/sdk/transport.js"
 import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.js';
+import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js';
 
 process.loadEnvFile('./.env')
 
@@ -172,6 +173,7 @@ class LLMClient {
     try {
       const params: OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming = {
         model: "gpt-4o-mini",
+        store: true,
         messages: messages.map(message => {
           if(message.tool_calls) {
             return {
@@ -222,7 +224,6 @@ class LLMClient {
 }
 
 class MCPLLMApplication {
-  private mcpClient: Client;
   private manager: MultiServerManager;
   private llmClient: LLMClient;
   private messages: any[] = [];
@@ -245,22 +246,18 @@ class MCPLLMApplication {
     //   "resendApiKey": process.env.RESEND_API_KEY,
     // })
 
-    const transportResend = new StdioClientTransport({
-      command: 'node',
-      args: [
-        '--env-file=/home/saymon/Projects/My/wongames-mcp/.env',
-        '/home/saymon/Projects/My/wongames-mcp/src/resend-server.ts'
-      ]
-    });
+    const transportResend = new SSEClientTransport(
+      new URL("http://localhost:3001/sse")
+    );
+  
 
-    const transportWongames = new StdioClientTransport({
-      command: 'node',
-      args: ['/home/saymon/Projects/My/wongames-mcp/src/server.ts']
-    });
+    const transportWongames = new SSEClientTransport(
+      new URL("http://localhost:3000/sse")
+    );
   
       // Add servers
-      await this.manager.addServer('resend', transportResend);
       await this.manager.addServer('wongames', transportWongames);
+      await this.manager.addServer('resend', transportResend);
       
   
     
