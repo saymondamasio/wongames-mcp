@@ -3,6 +3,9 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { SERVER_CONFIG } from "./config/api.ts";
 import { getGamesTool } from "./tools/games.ts";
 import { getPlatformsTool } from "./tools/platforms.ts";
+import { getCategoriesTool } from "./tools/categories.ts";
+import { getPublishersTool } from "./tools/publishers.ts";
+import { getDevelopersTool } from "./tools/developers.ts";
 
 /**
  * Initialize the MCP server and register all tools
@@ -27,6 +30,25 @@ async function initializeServer() {
     getPlatformsTool.name,
     getPlatformsTool.description,
     getPlatformsTool.handler
+  );
+
+  server.tool(
+    getCategoriesTool.name,
+    getCategoriesTool.description,
+    getCategoriesTool.handler
+  );
+
+  server.tool(
+    getPublishersTool.name,
+    getPublishersTool.description,
+    getPublishersTool.handler
+  );
+
+  
+  server.tool(
+    getDevelopersTool.name,
+    getDevelopersTool.description,
+    getDevelopersTool.handler
   );
 
   return server;
