@@ -17,7 +17,19 @@ export const TOOL_CONFIG = {
   },
   platforms: {
     name: "get_platforms",
-    description: "Get a list of platforms. Check if the platform the user requested exists"
+    description: "Get a list of platforms."
+  },
+  categories: {
+    name: "get_categories",
+    description: "Get a list of categories."
+  },
+  developers: {
+    name: "get_developers",
+    description: "Get a list of developers."
+  },
+  publishers: {
+    name: "get_publishers",
+    description: "Get a list of publishers."
   }
 };
 
