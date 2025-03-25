@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { fetchGames } from '../services/api.ts';
-import { TOOL_CONFIG } from '../config/api.ts';
+import { fetchGames } from '../../../services/api.ts';
+import { TOOL_CONFIG } from '../../../config/api.ts';
 import type { GamesParams, McpResponse, McpTextContent } from "../types/index.ts";
 
 /**

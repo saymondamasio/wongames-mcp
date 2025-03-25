@@ -2,7 +2,6 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import OpenAI from 'openai';
 import { createInterface, Interface } from 'readline';
-// import { ChatCompletionMessageToolCall } from 'openai/resources.mjs';
 
 import { createTransport } from "@smithery/sdk/transport.js"
 import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.js';

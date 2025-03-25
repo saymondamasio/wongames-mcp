@@ -1,5 +1,5 @@
-import { fetchPlatforms } from '../services/api.ts';
-import { TOOL_CONFIG } from '../config/api.ts';
+import { fetchPlatforms } from '../../../services/api.ts';
+import { TOOL_CONFIG } from '../../../config/api.ts';
 import type {  McpResponse, McpTextContent } from "../types/index.ts";
 
 /**

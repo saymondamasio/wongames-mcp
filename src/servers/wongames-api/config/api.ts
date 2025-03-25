@@ -1,4 +1,4 @@
-import { createClient } from "../../generated/index.ts";
+import { createClient } from "../../../../generated/index.ts";
 
 
 // GraphQL API endpoint
