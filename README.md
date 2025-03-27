@@ -1,4 +1,5 @@
 # wongames-mcp
+[![smithery badge](https://smithery.ai/badge/@saymondamasio/wongames-mcp)](https://smithery.ai/server/@saymondamasio/wongames-mcp)
 
 To install dependencies:
 
