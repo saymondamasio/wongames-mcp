@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "servers": "concurrently  \"node src/servers/wongames-api/server.ts\" \"node src/servers/resend/server.ts\"",
-    "start": "node src/client/index.ts",
-    "dev": "node src/client/index.ts"
+    "start": "node --env-file=.env src/client/index.ts",
+    "dev": "node --env-file=.env src/client/index.ts"
   },
   "peerDependencies": {
     "typescript": "^5"
