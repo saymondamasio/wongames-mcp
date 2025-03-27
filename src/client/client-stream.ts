@@ -10,7 +10,6 @@ import EventEmitter from 'events';
 import { z } from 'zod';
 import { LoggingMessageNotificationSchema, ToolSchema, ResultSchema, ProgressSchema, CallToolResultSchema } from '@modelcontextprotocol/sdk/types.js';
 
-process.loadEnvFile('./.env')
 
 // Nova flag e função auxiliar para logging verbose
 const isVerbose = process.argv.includes("--verbose") || process.argv.includes("-v");
