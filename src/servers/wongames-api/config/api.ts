@@ -1,4 +1,4 @@
-import { createClient } from "../../../../generated/index.ts";
+import { createClient } from "../generated/index.ts";
 
 
 // GraphQL API endpoint
@@ -13,7 +13,7 @@ export const client = createClient({
 export const TOOL_CONFIG = {
   games: {
     name: "get_games",
-    description: "Get a list of games with optional filtering and pagination."
+    description: "Get a list of games with optional filtering and pagination. "
   },
   platforms: {
     name: "get_platforms",
@@ -21,15 +21,15 @@ export const TOOL_CONFIG = {
   },
   categories: {
     name: "get_categories",
-    description: "Get a list of categories."
+    description: "Get a list of categories. Use this tool to check if the filter exists, if necessary."
   },
   developers: {
     name: "get_developers",
-    description: "Get a list of developers."
+    description: "Get a list of developers. Use this tool to check if the filter exists, if necessary."
   },
   publishers: {
     name: "get_publishers",
-    description: "Get a list of publishers."
+    description: "Get a list of publishers. Use this tool to check if the filter exists, if necessary."
   }
 };
 

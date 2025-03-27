@@ -7,6 +7,8 @@ import type { GamesParams } from '../types/index.ts';
 export async function fetchGames(params: GamesParams){
   const { id, name, page, limit, start, price, platforms, categories,developers,publishers } = params;
 
+  console.log(params)
+
   return await client.query({
     games_connection: {
       __args: {

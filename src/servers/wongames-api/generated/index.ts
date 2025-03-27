@@ -13,8 +13,8 @@ import {
   type GraphqlOperation,
   type ClientOptions,
   GenqlError,
-} from '../generated/runtime/index.ts'
-export type { FieldsSelection } from '../generated/runtime/index.ts'
+} from './runtime/index.ts'
+export type { FieldsSelection } from './runtime/index.ts'
 export { GenqlError }
 
 import types from './types.ts'

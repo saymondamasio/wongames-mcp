@@ -25,7 +25,6 @@ interface ToolCall {
 class MultiServerManager {
   private servers: Map<string, { 
     client: Client, 
-    config: any,
     capabilities: { 
       tools: any[], 
       resources: any[], 
@@ -175,17 +174,17 @@ class LLMClient {
         store: true,
         messages: messages.map(message => {
           if(message.tool_calls) {
-            return {
-              ...message,
-              tool_calls: message.tool_calls.map(call => ({
-                id: call.id,
-                type: 'function',
-                function: {
-                  name: call.name,
-                  arguments: call.arguments
-                }
-              }))
+        return {
+          ...message,
+          tool_calls: message.tool_calls.map(call => ({
+            id: call.id,
+            type: 'function',
+            function: {
+          name: call.name,
+          arguments: call.arguments
             }
+          }))
+        }
           }
           
           return message
@@ -193,14 +192,15 @@ class LLMClient {
         tools: options.tools?.map(tool => ({
           type: 'function',
           function: {
-            name: tool.name,
-            description: tool.description,
-            parameters: tool.inputSchema.properties ? {
-              type: 'object',
-              properties: tool.inputSchema.properties
-            } : {}
+        name: tool.name,
+        description: tool.description,
+        parameters: tool.inputSchema.properties ? {
+          type: 'object',
+          properties: tool.inputSchema.properties
+        } : {}
           }
         })),
+        user: `user-${Math.random().toString(36).substr(2, 9)}`,
       }
 
       vlog(JSON.stringify(params, null, 2))

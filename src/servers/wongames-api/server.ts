@@ -1,5 +1,4 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { SERVER_CONFIG } from "./config/api.ts";
 import { getGamesTool } from "./tools/games.ts";
 import { getPlatformsTool } from "./tools/platforms.ts";
